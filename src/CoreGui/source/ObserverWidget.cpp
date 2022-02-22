@@ -45,6 +45,7 @@
 #include <QDragMoveEvent>
 #include <QTreeView>
 #include <QTableView>
+#include <QHeaderView>
 #include <QDockWidget>
 #include <QLabel>
 #include <QInputDialog>

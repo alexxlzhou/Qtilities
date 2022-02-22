@@ -22,6 +22,7 @@
 #include <QDesktopWidget>
 #include <QPushButton>
 #include <QStatusBar>
+#include <QHeaderView>
 
 using namespace Qtilities::CoreGui::Interfaces;
 struct Qtilities::CoreGui::ConfigurationWidgetPrivateData {

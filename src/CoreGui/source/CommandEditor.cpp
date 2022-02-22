@@ -20,6 +20,7 @@
 
 #include <QGridLayout>
 #include <QTableView>
+#include <QHeaderView>
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QSortFilterProxyModel>
