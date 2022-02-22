@@ -150,7 +150,6 @@ set(UI_FILES
 	
 set(QRC_FILES resources/CoreGui.qrc)
 
-set(QTPROPERTYBROWSER OFF)
 IF(QTPROPERTYBROWSER)
 	SET(HEADER_FILES ${HEADER_FILES} source/ObjectPropertyBrowser.h source/ObjectDynamicPropertyBrowser.h)
 	SET(SOURCE_FILES ${SOURCE_FILES} source/ObjectPropertyBrowser.cpp source/ObjectDynamicPropertyBrowser.cpp)
@@ -179,6 +178,10 @@ target_link_libraries(${PROJECT_NAME} PUBLIC QtilitiesLogging QtilitiesCore
     Qt${QT_VERSION_MAJOR}::PrintSupport
 	Qt${QT_VERSION_MAJOR}::Help 
 )
+
+IF(QTPROPERTYBROWSER)
+	target_link_libraries(${PROJECT_NAME} PUBLIC ${QTPROPERTYBROWSER_LIBRARY})
+ENDIF(QTPROPERTYBROWSER)
 
 set_target_properties(${PROJECT_NAME} PROPERTIES AUTOMOC TRUE)
 

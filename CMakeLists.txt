@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 2.9)
 project(Qtilities)
 
+set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModules)
+set_property( GLOBAL PROPERTY USE_FOLDERS ON)
+
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} 5.5 COMPONENTS Core Gui Widgets Xml PrintSupport Help REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} 5.5 COMPONENTS Core Gui Widgets Xml PrintSupport Network Help REQUIRED)
 
 set(QTILITIES_VERSION_MAJOR     1)
 set(QTILITIES_VERSION_MINOR     5)
@@ -27,7 +30,16 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 option(BUILD_SHARED_LIBS "Build shared library." ON)
-option(BUILD_EXAMPLES "Build examples." OFF)
+option(BUILD_EXAMPLES "Build examples." ON)
+
+option(QTPROPERTYBROWSER ON)
+IF(QTPROPERTYBROWSER)
+	set(QTPROPERTYBROWSER_DIR "" CACHE STRING "directory for QtPropertyBrowser")
+	find_package(QtPropertyBrowser REQUIRED)
+	message(STATUS "QtPropertyBrowser directory and library: " ${QTPROPERTYBROWSER_INCLUDE_DIR} ";" ${QTPROPERTYBROWSER_LIBRARY})
+	add_definitions(-DQTILITIES_PROPERTY_BROWSER)
+	include_directories(${QTPROPERTYBROWSER_INCLUDE_DIR})
+ENDIF(QTPROPERTYBROWSER)
 
 set(Qtilities_header_dir ${CMAKE_CURRENT_SOURCE_DIR}/include)
 include_directories(${Qtilities_header_dir})

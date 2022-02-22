@@ -5,7 +5,11 @@ add_subdirectory(Core)
 add_subdirectory(CoreGui)
 add_subdirectory(ExtensionSystem)
 add_subdirectory(ProjectManagement)
-#add_subdirectory(Examples)
+
+if(BUILD_EXAMPLES)
+	add_subdirectory(Examples)
+endif(BUILD_EXAMPLES)
+
 #add_subdirectory(Plugins)
 #add_subdirectory(Testing)
 #add_subdirectory(Tool)
