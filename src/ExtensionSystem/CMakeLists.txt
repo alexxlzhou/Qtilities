@@ -44,7 +44,11 @@ target_link_libraries(${PROJECT_NAME} PUBLIC QtilitiesLogging QtilitiesCore Qtil
 )
 #need xml?
 
-set_target_properties(${PROJECT_NAME} PROPERTIES AUTOMOC TRUE)
+set_target_properties(${PROJECT_NAME} PROPERTIES 
+	AUTOMOC ON
+    AUTORCC ON
+    AUTOUIC ON
+)
 
 install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin

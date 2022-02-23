@@ -5,7 +5,7 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_CURRENT_SOURCE_DIR}/CMakeModu
 set_property( GLOBAL PROPERTY USE_FOLDERS ON)
 
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} 5.5 COMPONENTS Core Gui Widgets Xml PrintSupport Network Help REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} 5.5 COMPONENTS Core Gui Widgets Xml PrintSupport Network Help Test REQUIRED)
 
 set(QTILITIES_VERSION_MAJOR     1)
 set(QTILITIES_VERSION_MINOR     5)
@@ -29,8 +29,12 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
+option(QTILITIES_NO_HELP OFF)
 option(BUILD_SHARED_LIBS "Build shared library." ON)
 option(BUILD_EXAMPLES "Build examples." ON)
+option(BUILD_PLUGINS "Build examples." ON)
+option(BUILD_TOOLS "Build examples." ON)
+option(BUILD_TESTING "Build examples." ON)
 
 option(QTPROPERTYBROWSER ON)
 IF(QTPROPERTYBROWSER)

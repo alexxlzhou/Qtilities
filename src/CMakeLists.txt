@@ -10,6 +10,15 @@ if(BUILD_EXAMPLES)
 	add_subdirectory(Examples)
 endif(BUILD_EXAMPLES)
 
-#add_subdirectory(Plugins)
-#add_subdirectory(Testing)
-#add_subdirectory(Tool)
+if(BUILD_PLUGINS)
+	add_subdirectory(Plugins)
+endif(BUILD_PLUGINS)
+
+if(BUILD_TOOLS)
+	add_subdirectory(Tools)
+endif(BUILD_TOOLS)
+
+if(BUILD_TESTING)
+	add_subdirectory(Testing)
+endif(BUILD_TESTING)
+

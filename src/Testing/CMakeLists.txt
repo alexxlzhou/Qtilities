@@ -1,76 +1,101 @@
 cmake_minimum_required(VERSION 2.9)
-project(QtPropertyBrowser)
-
-find_package(Qt5 COMPONENTS Core Gui Widgets REQUIRED)
+project(QtilitiesTesting)
 
 set(SOURCE_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtbuttonpropertybrowser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qteditorfactory.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtgroupboxpropertybrowser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtpropertybrowser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtpropertybrowserutils.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtpropertymanager.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qttreepropertybrowser.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtvariantproperty.cpp
+    source/BenchmarkTests.cpp
+    source/TestAbstractTreeItem.cpp
+    source/TestActivityPolicyFilter.cpp
+    source/TestExporting.cpp
+    source/TestNamingPolicyFilter.cpp
+    source/TestObjectManager.cpp
+    source/TestObserver.cpp
+    source/TestObserverRelationalTable.cpp
+    source/TestSubjectIterator.cpp
+    source/TestSubjectTypeFilter.cpp
+    source/TestTask.cpp
+    source/TestTreeFileItem.cpp
+    source/TestTreeIterator.cpp
+    source/TestVersionNumber.cpp
 )
+
 set(HEADER_FILES
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtbuttonpropertybrowser.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qteditorfactory.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtgroupboxpropertybrowser.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtpropertybrowser.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtpropertybrowserutils_p.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtpropertymanager.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qttreepropertybrowser.h
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/qtvariantproperty.h
+    source/BenchmarkTests.h
+    source/TestAbstractTreeItem.h
+    source/TestActivityPolicyFilter.h
+    source/TestExporting.h
+    source/TestingConstants.h
+    source/Testing_global.h
+    source/TestNamingPolicyFilter.h
+    source/TestObjectManager.h
+    source/TestObserver.h
+    source/TestObserverRelationalTable.h
+    source/TestSubjectIterator.h
+    source/TestSubjectTypeFilter.h
+    source/TestTask.h
+    source/TestTreeFileItem.h
+    source/TestTreeIterator.h
+    source/TestVersionNumber.h
 )
 
-set(QRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/qtpropertybrowser.qrc)
-
-source_group("Header Files" FILES ${HEADER_FILES})
-source_group("Source Files" FILES ${SOURCE_FILES})
-
-set(CMAKE_AUTORCC ON)
-
-option(BUILD_SHARED_LIBS "Build shared library." ON)
-option(BUILD_EXAMPLES "Build examples." OFF)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-add_library(QtPropertyBrowser ${HEADER_FILES} ${SOURCE_FILES} ${QRC_FILES})
-
-target_include_directories(QtPropertyBrowser PUBLIC
-    ${Qt5Core_INCLUDE_DIRS}
-    ${Qt5Gui_INCLUDE_DIRS}
-    ${Qt5Widgets_INCLUDE_DIRS}
+# --------------------------
+# Extension Library Files
+# --------------------------
+set(SOURCE_FILES ${SOURCE_FILES}
+    source/DebugWidget.cpp
+    source/DropableListWidget.cpp
+    source/FunctionCallAnalyzer.cpp
+    source/TestFileSetInfo.cpp
+    source/TestFrontend.cpp
 )
 
-target_link_libraries(QtPropertyBrowser PUBLIC
-    ${Qt5Core_LIBRARIES}
-    ${Qt5Gui_LIBRARIES}
-    ${Qt5Widgets_LIBRARIES}
+set(HEADER_FILES ${HEADER_FILES}
+    source/DebugWidget.h
+    source/DropableListWidget.h
+    source/FunctionCallAnalyzer.h
+    source/ITestable.h
+    source/TestFileSetInfo.h
+    source/TestFrontend.h
+    source/TestingConstants.h
+    source/Testing_global.h
+)
+		
+set(UI_FILES 
+	source/TestFrontend.ui
+	source/DebugWidget.ui
+	)
+	
+set(QRC_FILES 
+	)
+
+add_definitions(-DTESTING_LIBRARY)
+
+include_directories(${Qtilities_header_dir}/QtilitiesLogging)
+include_directories(${Qtilities_header_dir}/QtilitiesCore)
+include_directories(${Qtilities_header_dir}/QtilitiesCoreGui)
+include_directories(${Qtilities_header_dir}/QtilitiesExtensionSystem)
+include_directories(${Qtilities_header_dir}/QtilitiesProjectManagement)
+include_directories(${Qtilities_header_dir}/QtilitiesTesting)
+
+#set(CMAKE_INCLUDE_CURRENT_DIR ON)
+add_library(${PROJECT_NAME} ${HEADER_FILES} ${SOURCE_FILES} ${UI_FILES} ${QRC_FILES})
+
+target_link_libraries(${PROJECT_NAME} PUBLIC QtilitiesExtensionSystem QtilitiesProjectManagement
+    Qt${QT_VERSION_MAJOR}::Core 
+    Qt${QT_VERSION_MAJOR}::Gui 
+    Qt${QT_VERSION_MAJOR}::Widgets
+    Qt${QT_VERSION_MAJOR}::Xml
+    Qt${QT_VERSION_MAJOR}::Test
+    Qt${QT_VERSION_MAJOR}::PrintSupport
 )
 
-set_target_properties(QtPropertyBrowser PROPERTIES AUTOMOC TRUE)
+set_target_properties(${PROJECT_NAME} PROPERTIES 
+	AUTOMOC ON
+    AUTORCC ON
+    AUTOUIC ON
+)
 
-if(BUILD_EXAMPLES)
-    add_subdirectory(examples/demo)
-endif()
-
-include(GenerateExportHeader)
-set(CMAKE_CXX_VISIBILITY_PRESET hidden)
-set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
-generate_export_header(QtPropertyBrowser)
-
-install(TARGETS QtPropertyBrowser
+install(TARGETS ${PROJECT_NAME}
     RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin
     LIBRARY DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
     ARCHIVE DESTINATION ${CMAKE_INSTALL_PREFIX}/lib
 )
-install(FILES ${HEADER_FILES} DESTINATION ${CMAKE_INSTALL_PREFIX}/include/QtPropertyBrowser)
-install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/cmake/FindQtPropertyBrowser.cmake DESTINATION ${CMAKE_INSTALL_PREFIX})
-install(FILES ${CMAKE_CURRENT_BINARY_DIR}/qtpropertybrowser_export.h DESTINATION ${CMAKE_INSTALL_PREFIX}/include/QtPropertyBrowser)
-
-
-option(BUILD_DOCUMENTATION "Use Doxygen to create the HTML based API documentation" OFF)
-if(BUILD_DOCUMENTATION)
-    include(doxygen/doxygen.cmake)
-endif()
