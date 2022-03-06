@@ -1,5 +1,7 @@
 [![Build Status](https://travis-ci.org/JPNaude/Qtilities.svg?branch=master)](https://travis-ci.org/JPNaude/Qtilities)
 
+CMakeFiles for Qtilities were added in this fork.
+
 Introduction  
 ------------
 
